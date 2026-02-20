@@ -1,5 +1,7 @@
 Gateway (La Puerta): Su único trabajo es recibir peticiones, validar que no sean ataques (limpieza de caracteres, seguridad), verificar si el usuario existe (Auth) y redirigir la orden al servidor de lógica. Es un "tráfico" inteligente.
 
+run: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
 ## FAST API
 
 pip install fastapi uvicorn pydantic[email]
@@ -15,6 +17,19 @@ pip install qrcode[pil]
 
 pip install Flask requests
 
+pip install fastapi uvicorn pymongo pydantic[email] qrcode[pil]
+
+pip install python-jose[cryptography]
+
+
+## SOLO ESTO
+pip install fastapi uvicorn pymongo pydantic[email] qrcode[pil] python-jose[cryptography] python-multipart
+
+
+
+# En Windows (PowerShell)
+$env:DEBUG="True"
+uvicorn gateway.main:app --host 0.0.0.0 --port 8000 --reload
 
 
 ## Flujo de QR escaneo y token

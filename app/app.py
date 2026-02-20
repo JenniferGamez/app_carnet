@@ -26,7 +26,7 @@ def registro():
         # Enviamos los datos al Gateway
         response = requests.post(f"{GATEWAY_URL}/register/", json=datos, headers=headers)
         res_json = response.json()
-
+        
         if response.status_code == 201:
             flash(f"Registro exitoso. Tu carnet es: {res_json['data']['carnet']}", "success")
             return redirect(url_for('login'))

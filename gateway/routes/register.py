@@ -44,8 +44,7 @@ async def register_user(datos: RegistroSchema, request: Request):
             "message": "Usuario creado exitosamente",
             "data": {
                 "carnet": resultado["carnet"],
-                "token_qr": resultado["token_qr"],
-                "url_qr": resultado["url_completa"]
+                "correo_usb": f"{resultado['carnet']}@usb.ve"
             }
         }
         

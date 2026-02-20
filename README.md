@@ -1,3 +1,58 @@
+# Sistema de Carnetización Inteligente USB
+
+Este proyecto es un sistema de gestión de carnets universitarios que utiliza una arquitectura de **API Gateway** para separar la seguridad de la lógica de negocio, generando códigos QR dinámicos para el acceso.
+
+## Arquitectura
+- **Gateway (FastAPI):** Punto de entrada único. Gestiona seguridad (HTTPS, Tokens internos) y sirve archivos estáticos.
+- **Logic Server (Python):** Genera números de carnet únicos basados en el año actual y renderiza imágenes QR.
+- **Frontend (Flask):** Interfaz de usuario para registro, login y visualización del carnet.
+- **Base de Datos:** MongoDB para almacenamiento de perfiles y rutas de archivos.
+
+## Instalación y Configuración
+
+### Requisitos previos
+- Python 3.10+
+- MongoDB corriendo localmente o en la nube.
+
+### Configuración del Entorno
+1. Instala las dependencias necesarias:
+   ```bash
+   pip install fastapi uvicorn qrcode[pil] pymongo requests flask pydantic[email]
+
+
+
+PROYECTO_CARNET/
+├── gateway_api/              # EL BACKEND (FastAPI)
+│   ├── .venv/                # Entorno virtual del Backend
+│   ├── gateway/              # Rutas, Middleware y Configuración
+│   ├── server/               # Lógica de negocio (Generación de QR y Carnet)
+│   │   └── static/qrcodes/   # Carpeta donde se guardan los archivos .png
+│   └── main.py               # Punto de arranque del Gateway
+└── frontend_flask/           # EL FRONTEND (Flask)
+    ├── .venv/                # Entorno virtual del Frontend
+    ├── templates/            # Archivos HTML (index, registro, perfil)
+    └── app.py                # Lógica de la aplicación web
+
+
+🛠️ Requisitos e Instalación
+1. Preparar el Backend (Gateway)
+Entra en la carpeta gateway_api, crea el entorno e instala las librerías de procesamiento:
+
+Bash
+cd gateway_api
+python -m venv .venv
+# Activar (Windows: .venv\Scripts\activate | Mac/Linux: source .venv/bin/activate)
+pip install fastapi uvicorn pymongo pydantic[email] qrcode[pil]
+2. Preparar el Frontend (Flask)
+Entra en la carpeta frontend_flask, crea su propio entorno e instala las librerías de cliente:
+
+Bash
+cd frontend_flask
+python -m venv .venv
+# Activar (Windows: .venv\Scripts\activate | Mac/Linux: source .venv/bin/activate)
+pip install flask requests
+
+
 usb_carnet/
 ├── gateway/
 │   ├── main.py                # Punto de entrada y seguridad (CORS/Sanitización)

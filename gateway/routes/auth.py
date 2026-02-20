@@ -13,17 +13,22 @@ class LoginSchema(BaseModel):
 @router.post("/login")
 async def login(datos: LoginSchema):
     # Buscar usuario por carnet y password
-    user = usuarios_col.find_one({"carnet": datos.carnet, "password": datos.password})
+    carnet_extraido = datos.correo_usb.split("@")[0]
+    
+    user = usuarios_col.find_one({
+        "carnet": carnet_extraido, 
+        "password": datos.password
+    })
     
     if not user:
         return JSONResponse(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=401, 
             content={
-                "status": "fail",
-                "message": "Carnet o contraseña incorrectos",
+                "status": "fail", 
+                "message": "Correo o clave incorrectos",
                 "data": None
-            }
-        )
+                
+            })
     
     # Generar Token JWT de acceso (para su sesión)
     token = create_access_token(data={"sub": user["carnet"]})

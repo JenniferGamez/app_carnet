@@ -14,7 +14,7 @@ def qr_render(carnet, url_completa):
     img = qr.make_image(fill_color="black", back_color="white")
 
     # Guardado físico
-    output_dir = Path("server/static/qrcodes")
+    output_dir = Path("gateway/server/static/qrcodes")
     output_dir.mkdir(parents=True, exist_ok=True)
     
     file_path = output_dir / f"qr_{carnet}.png"

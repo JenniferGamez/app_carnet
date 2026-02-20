@@ -3,13 +3,13 @@ import secrets
 import datetime
 from gateway.database import usuarios_col
 
-from server.qr import qr_render
+from gateway.server.qr import qr_render
 
 def new_user(nombre, email, password, base_url):
     anio_actual = str(datetime.datetime.now().year)[-2:]
     # Generar Carnet {Año}-{Aleatorio} único
     while True:
-        num = random.randint(10000, 99999)
+        num = random.randint(10000, 99999) # Posibilida de 90,000 carnets por año
         carnet = f"{anio_actual}-{num}"
         if not usuarios_col.find_one({"carnet": carnet}):
             break
