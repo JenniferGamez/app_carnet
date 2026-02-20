@@ -1,0 +1,40 @@
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.staticfiles import StaticFiles
+import os
+from gateway.routes import auth, register
+from gateway.config import get_internal_token
+
+app = FastAPI(title="Gateway USB")
+
+API_INTERNAL_TOKEN = get_internal_token()
+
+
+
+@app.middleware("http")
+async def validar_seguridad_global(request: Request, call_next):
+    # 1. FORZAR HTTPS (Solo en producción)
+    # Si detecta que no es https y no estás en localhost, rechaza.
+    if request.url.scheme == "http" and "localhost" not in request.url.host:
+        raise HTTPException(status_code=400, detail="Solo se permiten conexiones HTTPS")
+
+    token_cliente = request.headers.get("X-Internal-Gateway-Token")
+    
+    if os.getenv("DEBUG") != "True":
+        if token_cliente != API_INTERNAL_TOKEN:
+            raise HTTPException(status_code=403, detail="Acceso no autorizado")
+    
+    response = await call_next(request)
+    return response
+    
+    
+# Rutas
+app.include_router(auth.router, prefix="/auth", tags=["Autenticación"])
+app.include_router(register.router, prefix="/register", tags=["Registro"])
+
+# Montar archivos estáticos para servir el frontend y ver el QR generado
+app.mount("/static", StaticFiles(directory="server/static"), name="static")
+
+
+@app.get("/")
+def check_health():
+    return {"status": "Gateway Operativo"}

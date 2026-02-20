@@ -1,0 +1,9 @@
+<h2>Bienvenido, {{ user.nombre }}</h2>
+<div style="border: 1px solid #ccc; padding: 20px; width: 300px; text-align: center;">
+    <h3>CARNET USB</h3>
+    <p><strong>Carnet:</strong> {{ user.carnet }}</p>
+    <hr>
+    <img src="http://localhost:8000{{ user.qr_image_url }}" alt="Código QR" style="width: 200px;">
+    <p>Escanea este código para validar tu acceso</p>
+</div>
+<a href="{{ url_for('index') }}">Cerrar sesión</a>
