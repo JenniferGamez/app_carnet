@@ -17,9 +17,7 @@ Este proyecto es un sistema de gestión de carnets universitarios que utiliza un
 ### Configuración del Entorno
 1. Instala las dependencias necesarias:
    ```bash
-   pip install fastapi uvicorn qrcode[pil] pymongo requests flask pydantic[email]
-
-
+   pip install fastapi uvicorn qrcode[pil] pymongo requests flask pydantic[email] qrcode[pil] python-jose[cryptography] python-multipart
 
 PROYECTO_CARNET/
 ├── gateway_api/              # EL BACKEND (FastAPI)
