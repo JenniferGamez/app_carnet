@@ -1,6 +1,54 @@
 Gateway (La Puerta): Su único trabajo es recibir peticiones, validar que no sean ataques (limpieza de caracteres, seguridad), verificar si el usuario existe (Auth) y redirigir la orden al servidor de lógica. Es un "tráfico" inteligente.
 
-run: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# Sistema de Carnetización USB - API Gateway
+
+Este es el **Backend (API Gateway)** encargado de procesar los registros, conectarse con MongoDB y generar los carnets digitales con códigos QR.
+
+## Requisitos Previos
+
+* **Python 3.10+**
+* **MongoDB** (Local o Atlas) corriendo.
+* **PowerShell** o **Git Bash**.
+
+---
+
+## 🛠️ Configuración Inicial (Windows)
+
+Sigue estos pasos para preparar el entorno:
+
+### 1. Activar Entorno Virtual
+Si usas **PowerShell** y recibes un error de "Scripts disabled", ejecuta primero:
+
+```
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+Luego activa el entorno:
+
+# En PowerShell:
+.\.venv\Scripts\Activate.ps1
+
+# O en Git Bash:
+source .venv/Scripts/activate
+```
+
+### Instalar Dependencias
+
+```
+pip install -r requirements.txt
+```
+
+### Ejecución del Servidor
+
+Para levantar el Gateway en modo desarrollo (saltando la validación de tokens y permitiendo cambios en tiempo real):
+
+```
+$env:DEBUG="True"
+uvicorn gateway.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+
+
 
 ## FAST API
 
@@ -17,7 +65,7 @@ pip install qrcode[pil]
 
 pip install Flask requests
 
-pip install fastapi uvicorn pymongo pydantic[email] qrcode[pil]
+pip install fastapi uvicorn pymongo pydantic[email] qrcode[pil] python-jose[cryptography] passlib[bcrypt]
 
 pip install python-jose[cryptography]
 

@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pymongo
+pydantic[email]
+qrcode[pil]
+python-jose[cryptography]
+python-multipart
+requests
